@@ -1,14 +1,20 @@
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext('2d');
 const lineColors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jsRange");
+const mode = document.getElementById("jsMode");
+
+const CANVAS_SIZE = 700;
+const DEFAULT_COLOR = "black";
 
 let painting = false;
+let filling = false;
 
 function initCanvasStyle() {
-    canvas.width = 700;
-    canvas.height = 700;
-    ctx.fillStyle = "black";
-    ctx.strokeStyle = "black";
+    canvas.width = CANVAS_SIZE;
+    canvas.height = CANVAS_SIZE;
+    ctx.fillStyle = DEFAULT_COLOR;
+    ctx.strokeStyle = DEFAULT_COLOR;
     ctx.lineWidth = 1.0;
 }
 
@@ -28,8 +34,11 @@ function onMouseMove(event) {
         ctx.moveTo(X, Y);
     }
     else {
-        ctx.lineTo(X, Y);
-        ctx.stroke();
+        if(!filling) {
+            ctx.lineTo(X, Y);
+            ctx.stroke();
+        }
+
     }
     //console.log(X, Y);
 }
@@ -38,6 +47,30 @@ function changeColor(event) {
     const selectedColor = event.target.style.backgroundColor;
     console.log(selectedColor);
     ctx.strokeStyle = selectedColor;
+    ctx.fillStyle = selectedColor;
+}
+
+function changeRange(event) {
+    const selectedLineWidth = event.target.value;
+    console.log(selectedLineWidth);
+    ctx.lineWidth = selectedLineWidth;
+}
+
+function changeMode() {
+    filling = !filling;
+    
+    if(filling) {
+        mode.innerText = "Paint";
+    }
+    else {
+        mode.innerText = "Fill";
+    }
+}
+
+function handleCanvasClick() {
+    if(filling) {
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
 if(canvas) {
@@ -45,6 +78,7 @@ if(canvas) {
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
+    canvas.addEventListener("click", handleCanvasClick);
 }
 
 Array.from(lineColors).forEach(color => color.addEventListener("click", changeColor));
@@ -57,4 +91,13 @@ if(lineColors) {
     }
 }
 */
+
+if(range) {
+    range.addEventListener("input", changeRange);
+}
+
+if(mode) {
+    mode.addEventListener("click", changeMode);
+}
+
 initCanvasStyle();
