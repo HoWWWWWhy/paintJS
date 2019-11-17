@@ -10,8 +10,8 @@ body {
 }
 
 .canvas {
-    width: 700px;
-    height: 700px;
+    /*width: 700px;
+    height: 700px;*/
     border-radius: 15px;
     background-color: white;
     box-shadow: 10px 10px 3px 1px #636e72;
