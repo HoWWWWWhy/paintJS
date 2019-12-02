@@ -54,3 +54,12 @@ body {
 .controls_colors, .controls_buttons, .controls_range {
     margin: 10px auto;
 }
+
+.controls_range {
+    display: flex;
+    align-items: center;
+}
+
+.rangeDisplay {
+    margin: 0 0 0 5px;
+}

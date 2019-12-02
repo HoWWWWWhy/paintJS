@@ -2,6 +2,7 @@ const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext('2d');
 const lineColors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
+const rangeDisplay = document.getElementById("jsRangeDisplay");
 const mode = document.getElementById("jsMode");
 const saveBtn = document.getElementById("jsSave");
 
@@ -33,7 +34,7 @@ function stopPainting() {
 function onMouseMove(event) {
     const X = event.offsetX;
     const Y = event.offsetY;
-
+    //console.log(painting)
     if(!painting) {
         ctx.beginPath();
         ctx.moveTo(X, Y);
@@ -59,6 +60,7 @@ function handleChangeRange(event) {
     const selectedLineWidth = event.target.value;
     //console.log(selectedLineWidth);
     ctx.lineWidth = selectedLineWidth;
+    rangeDisplay.innerText = selectedLineWidth;
 }
 
 function handleChangeMode() {
